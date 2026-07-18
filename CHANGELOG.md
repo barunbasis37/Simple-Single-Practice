@@ -1,3 +1,12 @@
+# [0.3.0](https://github.com/barunbasis37/Simple-Single-Practice/compare/v0.2.0...v0.3.0) (2026-07-18)
+
+
+### Features
+
+* **models:** add Subcategory model ([2bb7b6f](https://github.com/barunbasis37/Simple-Single-Practice/commit/2bb7b6f326656ef23c293557857740b78334a28a))
+
+
+
 # [0.2.0](https://github.com/barunbasis37/Simple-Single-Practice/compare/v0.1.0...v0.2.0) (2026-07-18)
 
 
