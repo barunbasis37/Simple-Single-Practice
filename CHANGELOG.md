@@ -1,3 +1,12 @@
+# [0.4.0](https://github.com/barunbasis37/Simple-Single-Practice/compare/v0.3.0...v0.4.0) (2026-07-26)
+
+
+### Features
+
+* **pr-bot:** checkpoint PR-review-bot assignment (steps 1-9) ([f13a4d7](https://github.com/barunbasis37/Simple-Single-Practice/commit/f13a4d7bc3fac21e9983dcecde731533c458964a))
+
+
+
 # [0.3.0](https://github.com/barunbasis37/Simple-Single-Practice/compare/v0.2.0...v0.3.0) (2026-07-18)
 
 
