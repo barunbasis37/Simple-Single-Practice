@@ -1,0 +1,128 @@
+diff --git a/Models/Category.cs b/Models/Category.cs
+index 5656303..7b7d227 100644
+--- a/Models/Category.cs
++++ b/Models/Category.cs
+@@ -1,8 +1,5 @@
+ namespace SimpleSinglePractice.Models;
+ 
+-public class Category
++public class Category : NamedEntity
+ {
+-    public int Id { get; set; }
+-    public string Name { get; set; } = string.Empty;
+-    public string? Description { get; set; }
+ }
+diff --git a/Models/NamedEntity.cs b/Models/NamedEntity.cs
+new file mode 100644
+index 0000000..b42c079
+--- /dev/null
++++ b/Models/NamedEntity.cs
+@@ -0,0 +1,8 @@
++namespace SimpleSinglePractice.Models;
++
++public abstract class NamedEntity
++{
++    public int Id { get; set; }
++    public string Name { get; set; } = string.Empty;
++    public string? Description { get; set; }
++}
+diff --git a/Models/Subcategory.cs b/Models/Subcategory.cs
+index 885426e..dc1cfba 100644
+--- a/Models/Subcategory.cs
++++ b/Models/Subcategory.cs
+@@ -1,10 +1,7 @@
+ namespace SimpleSinglePractice.Models;
+ 
+-public class Subcategory
++public class Subcategory : NamedEntity
+ {
+-    public int Id { get; set; }
+-    public string Name { get; set; } = string.Empty;
+-    public string? Description { get; set; }
+     public int CategoryId { get; set; }
+     public Category? Category { get; set; }
+ }
+diff --git a/Tests/ModelTests.cs b/Tests/ModelTests.cs
+new file mode 100644
+index 0000000..3ad33a0
+--- /dev/null
++++ b/Tests/ModelTests.cs
+@@ -0,0 +1,51 @@
++using SimpleSinglePractice.Models;
++using Xunit;
++
++namespace SimpleSinglePractice.Tests;
++
++public class ModelTests
++{
++    [Fact]
++    public void Category_DefaultsNameToEmptyString()
++    {
++        var category = new Category();
++
++        Assert.Equal(string.Empty, category.Name);
++        Assert.Null(category.Description);
++    }
++
++    [Fact]
++    public void Category_StoresAssignedValues()
++    {
++        var category = new Category { Id = 1, Name = "Electronics", Description = "Gadgets" };
++
++        Assert.Equal(1, category.Id);
++        Assert.Equal("Electronics", category.Name);
++        Assert.Equal("Gadgets", category.Description);
++    }
++
++    [Fact]
++    public void Subcategory_DefaultsNameToEmptyString()
++    {
++        var subcategory = new Subcategory();
++
++        Assert.Equal(string.Empty, subcategory.Name);
++        Assert.Null(subcategory.Description);
++    }
++
++    [Fact]
++    public void Subcategory_LinksToParentCategoryViaForeignKey()
++    {
++        var category = new Category { Id = 1, Name = "Electronics" };
++        var subcategory = new Subcategory
++        {
++            Id = 10,
++            Name = "Phones",
++            CategoryId = category.Id,
++            Category = category,
++        };
++
++        Assert.Equal(category.Id, subcategory.CategoryId);
++        Assert.Same(category, subcategory.Category);
++    }
++}
+diff --git a/Tests/SampleSinglePractice.Tests.csproj b/Tests/SampleSinglePractice.Tests.csproj
+new file mode 100644
+index 0000000..ca4cb91
+--- /dev/null
++++ b/Tests/SampleSinglePractice.Tests.csproj
+@@ -0,0 +1,21 @@
++<Project Sdk="Microsoft.NET.Sdk">
++
++  <PropertyGroup>
++    <TargetFramework>net8.0</TargetFramework>
++    <Nullable>enable</Nullable>
++    <ImplicitUsings>enable</ImplicitUsings>
++    <IsPackable>false</IsPackable>
++    <RootNamespace>SimpleSinglePractice.Tests</RootNamespace>
++  </PropertyGroup>
++
++  <ItemGroup>
++    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
++    <PackageReference Include="xunit" Version="2.9.2" />
++    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
++  </ItemGroup>
++
++  <ItemGroup>
++    <ProjectReference Include="..\Models\SampleSinglePractice.Models.csproj" />
++  </ItemGroup>
++
++</Project>
